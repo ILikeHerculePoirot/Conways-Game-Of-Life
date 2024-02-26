@@ -4,10 +4,6 @@ import time
 pygame.init()
 screen=pygame.display.set_mode((400,400))
 pygame.display.set_caption("Conway's Game Of Life")
-white=pygame.image.load("Dead.png").convert()
-black=pygame.image.load("Live.png").convert()
-icon=pygame.image.load("Icon.png").convert()
-pygame.display.set_icon(icon)
 generated=False
 grid_state=[[False for i in range(20)] for i in range(20)]
 while True:
@@ -83,6 +79,6 @@ while True:
         time.sleep(1)
     for i in range(20):
         for j in range(20):
-            if(grid_state[i][j]==False):screen.blit(white,(i*20,j*20))
-            else:screen.blit(black,(i*20,j*20))
+            if(grid_state[i][j]==False):pygame.draw.rect(screen,(255,255,255),pygame.Rect((i*20),(j*20),20,20))
+            else:pygame.draw.rect(screen,(0,0,0),pygame.Rect((i*20),(j*20),20,20))
     pygame.display.update()
