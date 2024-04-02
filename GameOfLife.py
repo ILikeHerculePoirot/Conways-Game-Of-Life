@@ -5,7 +5,7 @@ pygame.init()
 screen=pygame.display.set_mode((400,400))
 pygame.display.set_caption("Conway's Game Of Life")
 generated=False
-grid_state=[[False for i in range(20)] for i in range(20)]
+grid_state=[[False]*20]*20
 while True:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:sys.exit()
@@ -21,57 +21,10 @@ while True:
         for i in range(20):
             for j in range(20):
                 surrounding_live=0
-                if(i==0):
-                    if(j==0):
-                        if(grid_state[i][j+1]):surrounding_live+=1
-                        if(grid_state[i+1][j]):surrounding_live+=1
-                        if(grid_state[i+1][j+1]):surrounding_live+=1
-                    elif(j==19):
-                        if(grid_state[i][j-1]):surrounding_live+=1
-                        if(grid_state[i+1][j]):surrounding_live+=1
-                        if(grid_state[i+1][j-1]):surrounding_live+=1
-                    else:
-                        if(grid_state[i][j-1]):surrounding_live+=1
-                        if(grid_state[i][j+1]):surrounding_live+=1
-                        if(grid_state[i+1][j-1]):surrounding_live+=1
-                        if(grid_state[i+1][j]):surrounding_live+=1
-                        if(grid_state[i+1][j+1]):surrounding_live+=1
-                elif(i==19):
-                    if(j==0):
-                        if(grid_state[i][j+1]):surrounding_live+=1
-                        if(grid_state[i-1][j]):surrounding_live+=1
-                        if(grid_state[i-1][j+1]):surrounding_live+=1
-                    elif(j==19):
-                        if(grid_state[i][j-1]):surrounding_live+=1
-                        if(grid_state[i-1][j]):surrounding_live+=1
-                        if(grid_state[i-1][j-1]):surrounding_live+=1
-                    else:
-                        if(grid_state[i][j-1]):surrounding_live+=1
-                        if(grid_state[i][j+1]):surrounding_live+=1
-                        if(grid_state[i-1][j-1]):surrounding_live+=1
-                        if(grid_state[i-1][j]):surrounding_live+=1
-                        if(grid_state[i-1][j+1]):surrounding_live+=1
-                elif(j==0):
-                    if(grid_state[i-1][j]):surrounding_live+=1
-                    if(grid_state[i+1][j]):surrounding_live+=1
-                    if(grid_state[i-1][j+1]):surrounding_live+=1
-                    if(grid_state[i][j+1]):surrounding_live+=1
-                    if(grid_state[i+1][j+1]):surrounding_live+=1
-                elif(j==19):
-                    if(grid_state[i-1][j]):surrounding_live+=1
-                    if(grid_state[i+1][j]):surrounding_live+=1
-                    if(grid_state[i-1][j-1]):surrounding_live+=1
-                    if(grid_state[i][j-1]):surrounding_live+=1
-                    if(grid_state[i+1][j-1]):surrounding_live+=1
-                else:
-                    if(grid_state[i-1][j-1]):surrounding_live+=1
-                    if(grid_state[i-1][j]):surrounding_live+=1
-                    if(grid_state[i-1][j+1]):surrounding_live+=1
-                    if(grid_state[i][j-1]):surrounding_live+=1
-                    if(grid_state[i][j+1]):surrounding_live+=1
-                    if(grid_state[i+1][j-1]):surrounding_live+=1
-                    if(grid_state[i+1][j]):surrounding_live+=1
-                    if(grid_state[i+1][j+1]):surrounding_live+=1
+                for x in range(abs(i-1),i+2):
+                    for y in range(abs(j-1),j+2):
+                        if(x<20 and y<20):
+                            if((x,y)!=(i,j) and grid_state[x][y]):surrounding_live+=1
                 if((surrounding_live<2 and grid_state[i][j]==True) or (surrounding_live>3 and grid_state[i][j]==True)):delete_list.append([i,j])
                 elif(surrounding_live==3 and grid_state[i][j]==False):create_list.append([i,j])
         for i in range(len(create_list)):grid_state[create_list[i][0]][create_list[i][1]]=True
