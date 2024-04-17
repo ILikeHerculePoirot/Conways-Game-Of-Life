@@ -5,15 +5,15 @@ pygame.init()
 screen=pygame.display.set_mode((400,400))
 pygame.display.set_caption("Conway's Game Of Life")
 generated=False
-grid_state=[[False]*20]*20
+grid_state=[[False]*20 for _ in range(20)]
 while True:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:sys.exit()
         elif(event.type==pygame.KEYDOWN and event.key==pygame.K_SPACE):generated=True
     if(pygame.mouse.get_pressed()==(True,False,False)):
         x,y=pygame.mouse.get_pos()
-        if(grid_state[(x-(x%20))//20][(y-(y%20))//20]):grid_state[(x-(x%20))//20][(y-(y%20))//20]=False
-        else:grid_state[(x-(x%20))//20][(y-(y%20))//20]=True
+        if(grid_state[x//20][y//20]):grid_state[x//20][y//20]=False
+        else:grid_state[x//20][y//20]=True
         time.sleep(0.25)
     if(generated):
         create_list=[]
